@@ -9,7 +9,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int selectedPage = 1;
+  int selectedPage = 0;
 
   final _pageOptions = [
     ViewPage(),
@@ -25,24 +25,59 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: _pageOptions[selectedPage],
-        bottomNavigationBar: BottomNavigationBar(
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home, size: 30), label: 'الاصناف'),
-            BottomNavigationBarItem(icon: Icon(Icons.mail, size: 30), label: 'الاصناف'),
-            BottomNavigationBarItem(icon: Icon(Icons.account_circle, size: 30), label: 'الاصناف'),
-            BottomNavigationBarItem(icon: Icon(Icons.add_card, size: 30), label: 'الاصناف'),
-          ],
-          selectedItemColor: Colors.green,
-          elevation: 5.0,
-          unselectedItemColor: Colors.green[900],
-          currentIndex: selectedPage,
-          backgroundColor: Colors.white,
-          onTap: (index){
-            setState(() {
-              selectedPage = index;
-            });
-          },
-        )
-    );
+
+        // bottomNavigationBar: BottomNavigationBar(
+        //   items: const [
+        //     BottomNavigationBarItem(icon: Icon(Icons.home, size: 20), label: 'ccc'),
+        //     BottomNavigationBarItem(icon: Icon(Icons.mail, size: 20), label: 'bbb'),
+        //     BottomNavigationBarItem(icon: Icon(Icons.account_circle, size: 20), label: 'aaa'),
+        //     BottomNavigationBarItem(icon: Icon(Icons.add_card, size: 20), label: 'الاصناف'),
+        //   ],
+        //   selectedItemColor: Colors.green,
+        //   elevation: 5.0,
+        //   unselectedItemColor: Colors.green[900],
+        //   currentIndex: selectedPage,
+        //   backgroundColor: Colors.white,
+        //   onTap: (index){
+        //     setState(() {
+        //       selectedPage = index;
+        //     });
+        //   },
+        // )
+
+        // ---------------------------------------------------------
+      bottomNavigationBar: NavigationBar(
+        onDestinationSelected: (int index) {
+          setState(() {
+            selectedPage = index;
+          });
+        },
+        indicatorColor: Colors.lightBlue,
+        selectedIndex: selectedPage,
+        destinations: const <Widget>[
+          NavigationDestination(
+            selectedIcon: Icon(Icons.home, color: Colors.white),
+            icon: Icon(Icons.home),
+            label: 'عرض الاصناف',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.mail, color: Colors.white),
+            icon: Icon(Icons.mail),
+            label: 'ارسال رسائل',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.home),
+            icon: Icon(Icons.messenger_sharp),
+            label: 'تعديل',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.add_card,  color: Colors.white),
+            icon: Icon(Icons.add_card),
+            label: 'اضافه',
+          ),
+
+        ],
+      ));
+
   }
 }

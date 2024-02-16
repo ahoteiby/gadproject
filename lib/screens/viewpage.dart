@@ -19,8 +19,8 @@ class _ViewPageState extends State<ViewPage> {
   var src = ' ';
 
   getData() async {
- //   http://10.211.55.3:5168/api/ProductsTbls/101
-
+//    http://10.211.55.3:5168/api/ProductsTbls/101
+print('getdata');
     var url = "http://10.211.55.3:5168/api/ProductsTbls";
     var response = await http.get(Uri.parse(url));
     var responsebody = jsonDecode(response.body);
@@ -53,7 +53,7 @@ class _ViewPageState extends State<ViewPage> {
             itemBuilder: (context, i)  {
               src =    allData[i]['productName'];
               // categoryId = categorylist[i]['categoryno'];
-              String url =   'https://4.img-dpreview.com/files/p/E~C667x0S5333x4000T1200x900~articles/3925134721/0266554465.jpeg';
+       //       String url =   'https://4.img-dpreview.com/files/p/E~C667x0S5333x4000T1200x900~articles/3925134721/0266554465.jpeg';
               return GestureDetector(
                 child: Container(
                   child: ItemCard(
@@ -67,9 +67,17 @@ class _ViewPageState extends State<ViewPage> {
                   print('-------------->');
                   print(allData[i]['id']);
                   print('-------------->');
+                  // pushReplacement
                   Navigator.push(context,
                       MaterialPageRoute(builder:(context) =>  UpdatePage(allData[i]['id'] ))
+
                   );
+                //   if (!context.mounted) {
+                //     print('refresh');
+                //   }else{
+                //     print('refresh22');
+                //   }
+                //   print('refresh');
                 },
               );
               // Text("no : ${categorylist[i]['categoryno']}");

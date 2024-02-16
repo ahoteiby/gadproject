@@ -18,13 +18,13 @@ class ItemCard extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: 200,
       decoration: BoxDecoration(
-        color: Colors.white70,
+        color: Colors.grey.shade200,
         borderRadius: BorderRadius.circular(30),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.6),
             offset: const Offset(
-              0.0,
+              10.0,
               10.0,
             ),
             blurRadius: 5.0,
@@ -37,33 +37,38 @@ class ItemCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                itemId.toString() + "  "+'كود الصنف',
-                style: const TextStyle(
-                    fontSize: 20, color: Colors.black,
-                    fontWeight: FontWeight.w700
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Align(
+             //     alignment: Alignment.center,
+                  child: Text('${itemName}',
+                    style: const TextStyle(
+                        fontSize: 20, color: Colors.black,
+                        fontWeight: FontWeight.w700
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                itemName + "  "+'اسم الصنف',
-                style: const TextStyle(
-                    fontSize: 20, color: Colors.black,
-                    fontWeight: FontWeight.w700
+                SizedBox(width: 10,),
+                Align(
+         //        alignment: Alignment.center,
+                  child: Text('اسم الصنف',
+                    style: const TextStyle(
+                      fontSize: 20, color: Colors.black,
+                          fontWeight: FontWeight.w700
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
+
             Align(
               alignment: Alignment.centerRight,
               child: Text(
-                itemPrice + "  "+'السعر ',
+                itemId.toString() + "  "+'كــــود ',
                 style: const TextStyle(
                     fontSize: 20, color: Colors.black,
-                    fontWeight: FontWeight.w700
+                  //  fontWeight: FontWeight.w700
                 ),
               ),
             ),
@@ -73,11 +78,22 @@ class ItemCard extends StatelessWidget {
                 itemAmount.toString() + "  "+'الكمية ',
                 style: const TextStyle(
                     fontSize: 20, color: Colors.black,
-                    fontWeight: FontWeight.w700
+               //     fontWeight: FontWeight.w700
                 ),
 
               ),
             ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                itemPrice + "  "+'السعر ',
+                style: const TextStyle(
+                  fontSize: 20, color: Colors.black,
+                  //    fontWeight: FontWeight.w700
+                ),
+              ),
+            ),
+
           ],
         ),
       ),

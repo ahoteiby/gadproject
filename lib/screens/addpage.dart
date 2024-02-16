@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:gadproject/utilities/constant.dart';
@@ -27,132 +28,74 @@ class _AddPageState extends State<AddPage> {
 
 
 checkData() async {
+
   var formdata = formstate.currentState;
   if (formdata!.validate()) {
     formdata.save();
   }
-  itemId = val2;
-  var url = "http://10.211.55.3:5168/api/ProductsTbls/";
-  url = url + itemId.toString();
-  var response = await http.get(Uri.parse(url));
-  var responsebody = jsonDecode(response.body);
+
+
+
+
+    itemId = val2;
+
+    var url = "http://10.211.55.3:5168/api/ProductsTbls/";
+    url = url + itemId.toString();
+
+    var response = await http.get(Uri.parse(url));
+  print(response.statusCode);
+  if (response.statusCode == 200) {
+    var responsebody = jsonDecode(response.body);
     setState(()  {
       itemName.text = responsebody['productName'].toString();
-       itemAmount.text = responsebody['productAmount'].toString();
-       itemPrice.text = responsebody['productPrice'].toString();
+      itemAmount.text = responsebody['productAmount'].toString();
+      itemPrice.text = responsebody['productPrice'].toString();
       isshow = !isshow;
     });
+    print('200');
+  } else { if (response.statusCode == 404) {
+    setState(()  {
+      itemName.clear;
+      itemAmount.clear() ;
+      itemPrice.clear();
+      isshow = !isshow;
+    });
+
+    print('404');
+  }
+
+  }
+
+
+
 }
 
 
 
 
 addItem() async{
-print('additem');
-  // var httpsUri = Uri(
-  //     scheme: 'http//',
-  //     host: '10.211.55.3:5168',
-  //     path: '/api/ProductsTbls/',
-  //     queryParameters: {'ID': '122', 'ProductName': 'asas',  'ProductAmount': '10',  'ProductPrice': '10.5'});
-  //     print(httpsUri);
-
-  // var postUrl = "http://10.211.55.3:5168/api/ProductsTbls/";
-  // var postresponse = await http.post(Uri.parse(postUrl), body: {
-  //   "id": "12",
-  //   "productName": "iiddname",
-  //   "productAmount": "55",
-  // });
-  // var postresponsebody = jsonDecode(postresponse.body);
-  // print(postresponsebody);
-  // return postresponsebody;
-
-  // -------------------------------------------------------- //
-//
-// curl -X 'PUT' \
-// 'http://10.211.55.3:5168/api/ProductsTbls/190' \
-// -H 'accept: */*' \
-// -H 'Content-Type: application/json' \
-// -d '{
-// "id": 190,
-//   "productName": "aaaanbbb",
-//   "productAmount": 70,
-//   "productPrice": 60
-// }'
-  //
-  // -------------------------------------------------------- //
-  var itname = 'adel';
-  int itid = 2290;
-  int itamount = 250;
-  var itprice = 55.55;
+  // var itname = itemName.text;
+  // int itid = itemId;
+   int itamount = 555;
+   var itprice = 666.6;
     try {
-      print('try');
-      // Map data1 = {
-      //
-      //           "id": itid,
-      //          "productname": itname,
-      //          "productamount": itamount,
-      //          "productprice": itprice
-      // };
       Map data1 = {
-        "id": 230,
-        "productName": "bbbbb",
-        "productAmount": 90,
-        "productPrice": 90.90
+        "id": itemId as int,
+        "productName": itemName.text,
+        "productAmount": itemAmount.text,
+        "productPrice": itemPrice.text
       };
-      //encode Map to JSON
       var body = json.encode(data1);
-      print(body);
-      // ----------------------------------------
       var response = await http.post(
           Uri.parse("http://10.211.55.3:5168/api/ProductsTbls",),
           headers: <String, String>{
             'content-type': 'application/json; charset=UTF-8',
           },
           body: body);
-
-      // --------------------------------------
-      // var response = await http.post(
-      //     Uri.parse("http://10.211.55.3:5168/api/ProductsTbls",),
-      //      headers: <String, String>{
-      //        'content-type': 'application/json',
-      //        body: body,
-      //      }
-      //        );
-      // ----------------------------------------
-      //            Delete Working
-      // ----------------------------------------
-
-      // var response = await http.delete(
-      //     Uri.parse(
-      //       "http://10.211.55.3:5168/api/ProductsTbls/102",
-      //     ));
-      //
-
-
-// ----------------------------------------
-//       curl -X 'PUT' \
-//       'http://10.211.55.3:5168/api/ProductsTbls/190' \
-//       -H 'accept: */*' \
-//       -H 'Content-Type: application/json' \
-//       -d '{
-//       "id": 190,
-//   "productName": "aaaanbbb",
-//   "productAmount": 70,
-//   "productPrice": 60
-//   }'
-      // -----------------------------------------
-      // Navigator.of(context).pushAndRemoveUntil(
-      //     MaterialPageRoute(builder: (BuildContext context) => const DisplayUsers()),
-      //         (Route<dynamic> route) => false);
-       print(response.statusCode);
-      print(response.request);
-      print(response.headersSplitValues);
-      print(response.reasonPhrase);
-
+      print(' another end');
     } catch (e) {
       print(e);
     }
-
 }
 
   @override
@@ -230,12 +173,9 @@ print('additem');
                                 fontSize: 30.0,
                                 color: kDarkBuleColor,
                               ),
-
-                              // fillColor: kDarkBuleColor,
                             ),
                           ),
                           SizedBox(height: 30,),
-
                           TextFormField(
                             controller: itemAmount,
                             onSaved: (val) {
@@ -255,7 +195,6 @@ print('additem');
                             ),
                           ),
                           SizedBox(height: 30,),
-
                           TextFormField(
                             controller: itemPrice,
                             onSaved: (val) {
@@ -313,7 +252,6 @@ print('additem');
                               ),
                             ),
                           ),
-
                         ],
                       ),
                     ),
